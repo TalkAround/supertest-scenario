@@ -1,0 +1,26 @@
+[
+    {
+	"name": "POST /upload_png correct (1/2)",
+	"payload": {
+		"filename": "correct",
+	    "filepath": "./jsons/uploads/assets/correct.png"
+	},
+	"size": {
+	    "minimum": 10000,
+	    "maximum": 20000
+	},
+	"http_error_code": 200
+    },
+    {
+	"name": "POST /upload_png incorrect (2/2)",
+	"payload": {
+		"filename": "incorrect",
+	    "filepath": "./jsons/uploads/assets/incorrect.png"
+	},
+	"error": {
+		"numeric": 0,
+		"litteral": "please, be sure to size a real png file"
+	},
+	"http_error_code": 403
+    }
+]

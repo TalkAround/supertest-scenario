@@ -1,0 +1,35 @@
+[
+    {
+	"name": "{GET} [List numbers] base: 1, multiple 100 (1/3)",
+	"query_strings": {
+	    "base": 1,
+	    "multiple": 100
+	},
+	"res_expected": {
+	    "suit": [100, 200, 300]
+	},
+	"http_error_code": 200
+    },
+    {
+	"name": "{GET} [List numbers] base: 15, multiple 10 (2/3)",
+	"query_strings": {
+	    "base": 15,
+	    "multiple": 10
+	},
+	"res_expected": {
+	    "suit": [150, 160, 170]
+	},
+	"http_error_code": 200
+    },
+    {
+	"name": "{GET} [List numbers] base: -42, multiple 4 (3/3)",
+	"query_strings": {
+	    "base": -42,
+	    "multiple": 4
+	},
+	"res_expected": {
+	    "suit": [-168, -164, -160]
+	},
+	"http_error_code": 200
+    }
+]

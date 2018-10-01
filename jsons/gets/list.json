@@ -1,0 +1,13 @@
+[
+    {
+	"name": "{GET} [List numbers] base: 1, multiple 10 (1/1)",
+	"query_strings": {
+	    "base": 1,
+	    "multiple": 10
+	},
+	"res_expected": {
+	    "suit": [10, 20, 30]
+	},
+	"http_error_code": 200
+    }
+]

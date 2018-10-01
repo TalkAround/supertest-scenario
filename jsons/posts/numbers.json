@@ -1,0 +1,32 @@
+[
+    {
+	"name": "{POST} [Number] 10 (1/3)",
+	"payload": {
+	    "number": 10
+	},
+	"response": {
+	    "result": 210
+	},
+	"http_error_code": 200
+    },
+    {
+	"name": "{POST} [Number] 0 (2/3)",
+	"payload": {
+	    "number": 0
+	},
+	"response": {
+	    "result": 200
+	},
+	"http_error_code": 200
+    },
+    {
+	"name": "{POST} [Number] -10 (3/3)",
+	"payload": {
+	    "number": -10
+	},
+	"response": {
+	    "result": 190
+	},
+	"http_error_code": 200
+    }
+]

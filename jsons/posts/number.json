@@ -1,0 +1,12 @@
+[
+    {
+	"name": "{POST} [Number] just post a number that return it in addition from 200 with 1 (1/1)",
+	"payload": {
+	    "number": 1
+	},
+	"response": {
+	    "result": 201
+	},
+	"http_error_code": 200
+    }
+]
