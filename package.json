@@ -1,11 +1,11 @@
 {
   "name": "supertest-scenario",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple module that can automatise some http api tests from a json and a specific function",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "testdbg": "mocha --inspect-brk"
+    "test": "mocha example",
+    "testdbg": "mocha --inspect-brk example"
   },
   "author": "Oscar STEFANINI",
   "license": "MIT",
