@@ -1,63 +1,74 @@
 'use strict'
 
-const express = require('express')
-const basic_auth = require('express-basic-auth')
-const body_parser = require('body-parser')
-const app = express()
-var multer  = require('multer')
-var storage = multer.memoryStorage()
-const readChunk = require('read-chunk')
-const imageType = require('image-type')
-const acceptableExtensions = ["png"]
+const request = require('supertest')
 
-var upload = multer({ storage: storage /*limits: {fileSize: 4000001}*/}).single('file');
+const simple_get = 0;
+const simple_post = 1;
+const upload_post = 2;
 
-app.use(basic_auth({
-    users: {"basic": "auth"}
-}))
+class supertest_scenario {
+    constructor(endpoint, type, api_credentials, scenario) {
+	this.endpoint_name = endpoint
+	this.type = type
+	this.api_credentials = api_credentials
+	this.scenario_fct = scenario
+    }
 
-app.set('json spaces', 2);
-app.use(body_parser.json())
+    static get _simple_get() {
+	return (simple_get)
+    }
 
-app.get('/list_numbers', function (req, res) {
-    let result_suit = [];
-    let base = req.query.base;
-    while (result_suit.length < 3) {
-            result_suit.push(base * req.query.multiple)
-            ++base;
-        }
-    res.status(200).json({"suit": result_suit})
-}       )
+    static get _simple_post() {
+	return (simple_post)
+    }
 
-app.post('/number', function(req, res) {
-    res.status(200).json({"result": 200 + req.body.number});
-})
+    static get _upload_post() {
+	return (upload_post)
+    }
 
-app.post('/size_png', function (req, res) {
-    upload(req, res, function (err) {
-	if (err) {
-	res.sendStatus(403);
-	return 
+    run_get(app, scenario_content, done) {
+	request(app)
+	    .get(this.endpoint_name)
+	    .query(scenario_content.query_strings)
+	    .auth(this.api_credentials.login, this.api_credentials.passwd)
+	    .expect(scenario_content.http_error_code)
+	    .end((err, res) => this.scenario_fct(err, res, scenario_content, done))
+    }
+
+    run_simple_post(app, scenario_content, done) {
+        request(app)
+	    .post(this.endpoint_name)
+	    .set('Content-Type', 'application/json')
+	    .auth(this.api_credentials.login, this.api_credentials.passwd)
+	    .send(scenario_content.payload)
+	    .expect(scenario_content.http_error_code)
+	    .end((err, res) => this.scenario_fct(err, res, scenario_content, done))
+    }
+
+    run_upload_post(app, scenario_content, done) {
+	request(app)
+	    .post(this.endpoint_name)
+	    .type('file')
+	    .field('name', 'filename')
+	    .auth(this.api_credentials.login, this.api_credentials.passwd)
+	    .attach("file", scenario_content.payload.filepath)
+	    .expect(scenario_content.http_error_code)
+	    .end((err, res) => this.scenario_fct(err, res, scenario_content, done))
+    }
+    
+    run_one(app, scenario_content, done) {
+	switch (this.type) {
+	case supertest_scenario._simple_get:
+	    this.run_get(app, scenario_content, done)
+	    break
+	case supertest_scenario._simple_post:
+	    this.run_simple_post(app, scenario_content, done)
+	    break
+	case supertest_scenario._upload_post:
+	    this.run_upload_post(app, scenario_content, done)
+	    break
 	}
-	const ext = req.file.originalname.split('.').pop();
-	const mimeorigin = req.file.mimetype;
-	const obj = imageType(req.file.buffer)
-	if (!obj || !ext || acceptableExtensions.indexOf(obj.ext) === -1 || ext !== obj.ext || obj.mime !== mimeorigin)
-	{
-        const error = {
-            "numeric": 0,
-            "litteral": "please, be sure to size a real png file"
-        }
-	    res.status(403).json({"error": error});
-	}
-	else
-	{
-	    const size = {
-            "size": req.file.size
-        }
-	    res.status(200).json({"size": size});
-	}
-    })
-})
+    }
+}
 
-module.exports = app
+module.exports = supertest_scenario

@@ -3,7 +3,7 @@
 	"name": "POST /upload_png correct (1/2)",
 	"payload": {
 		"filename": "correct",
-	    "filepath": "./jsons/uploads/assets/correct.png"
+	    "filepath": "./example/scenarios/png_sizer/assets/correct.png"
 	},
 	"size": {
 	    "minimum": 10000,
@@ -15,7 +15,7 @@
 	"name": "POST /upload_png incorrect (2/2)",
 	"payload": {
 		"filename": "incorrect",
-	    "filepath": "./jsons/uploads/assets/incorrect.png"
+	    "filepath": "./example/scenarios/png_sizer/assets/incorrect.png"
 	},
 	"error": {
 		"numeric": 0,
