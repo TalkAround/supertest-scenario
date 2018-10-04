@@ -4,7 +4,7 @@
 	"payload": {
 	    "number": 1
 	},
-	"response": {
+	"res_expected": {
 	    "result": 201
 	},
 	"http_error_code": 200
