@@ -2,15 +2,13 @@
 
 const app = require('./addition_little_suit_png_sizer_api')
 const supertest_scenarizer = require('../')
-const check_list_numbers = require('./scenarios/little_suit/validator')
-const check_number_addition = require('./scenarios/addition/validator')
 const check_upload_png = require('./scenarios/png_sizer/validator')
 const api_credentials = {
     'login': "basic",
     'passwd': 'auth'
 }
 
-const gets_scenarizer = new supertest_scenarizer('/list_numbers', supertest_scenarizer._simple_get, api_credentials, check_list_numbers)
+const gets_scenarizer = new supertest_scenarizer('/list_numbers', supertest_scenarizer._simple_get, api_credentials)
 describe('GET /list_numbers', function() {
     const array_suit = require("./scenarios/little_suit/scenario.json")
     const suit = array_suit[0];
@@ -25,7 +23,7 @@ describe('GET /list_numbers', function() {
     }
 })
 
-const posts_scenarizer = new supertest_scenarizer('/number', supertest_scenarizer._simple_post, api_credentials, check_number_addition)
+const posts_scenarizer = new supertest_scenarizer('/number', supertest_scenarizer._simple_post, api_credentials)
 describe('POST /number', function() {
     const array_number = require("./scenarios/addition/scenario.json")
     const number = array_number[0];
